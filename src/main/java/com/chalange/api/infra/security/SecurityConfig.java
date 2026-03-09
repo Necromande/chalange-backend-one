@@ -10,14 +10,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
-    /**
-     * SecurityFilterChain mínimo para desenvolvimento: permite todas as requisições
-     * e desabilita CSRF para facilitar testes com Postman/Insomnia.
-     */
+    private final JwtAuthenticationFilter jwtFilter;
+
+    public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -27,7 +30,9 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
-                );
+                )
+                // registra o filtro JWT antes do filtro padrão de login
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         // se usar H2 console
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
@@ -35,15 +40,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * InMemoryUserDetailsManager para ambiente de desenvolvimento.
-     * Evita que o Spring gere um usuário aleatório e imprima a senha no log.
-     *
-     * Usuário: dev
-     * Senha: devpass
-     *
-     * Em produção, remova/alterar para um UserDetailsService real.
-     */
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails dev = User.withUsername("dev")
@@ -52,10 +48,9 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(dev);
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-
 }

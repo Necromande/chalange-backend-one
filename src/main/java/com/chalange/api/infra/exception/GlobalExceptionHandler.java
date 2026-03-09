@@ -1,5 +1,6 @@
 package com.chalange.api.infra.exception;
 
+import com.chalange.api.domain.exception.DuplicateEmailException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,5 +82,10 @@ public class GlobalExceptionHandler {
             root = root.getCause();
         }
         return root;
+    }
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<Map<String, String>> handleDuplicateEmail(DuplicateEmailException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("erro", ex.getMessage()));
     }
 }
