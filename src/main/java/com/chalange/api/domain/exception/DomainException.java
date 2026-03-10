@@ -1,12 +1,15 @@
 package com.chalange.api.domain.exception;
 
-/**
- * Exceção base para erros de domínio.
- * Mantém a hierarquia para facilitar captura e tradução no handler.
- */
-public abstract class DomainException extends RuntimeException {
-    public DomainException() { super(); }
-    public DomainException(String message) { super(message); }
-    public DomainException(String message, Throwable cause) { super(message, cause); }
-    public DomainException(Throwable cause) { super(cause); }
+import com.chalange.api.infra.exception.HttpException;
+import org.springframework.http.HttpStatus;
+
+public abstract class DomainException extends HttpException { // Agora estende HttpException
+
+    public DomainException(String message) {
+        super(HttpStatus.BAD_REQUEST, message); // Status padrão para erros de domínio
+    }
+
+    public DomainException(HttpStatus status, String message) {
+        super(status, message); // Permite que filhas escolham o status (ex: 404, 409)
+    }
 }
