@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/usuarios/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // registra o filtro JWT antes do filtro padrão de login

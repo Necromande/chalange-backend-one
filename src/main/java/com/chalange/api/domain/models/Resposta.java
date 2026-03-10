@@ -23,7 +23,7 @@ public class Resposta {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String mensagem;
 
-    @Column(nullable = false)
+    @Column(name = "data_criacao", nullable = false) // Mapeia para o nome real no MySQL
     private OffsetDateTime criadoEm;
 
     @ManyToOne(fetch = FetchType.LAZY)

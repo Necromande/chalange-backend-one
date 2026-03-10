@@ -28,7 +28,7 @@ public class Topico {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String mensagem;
 
-    @Column(nullable = false)
+    @Column(name = "data_criacao", nullable = false) // Aqui está o segredo
     private OffsetDateTime criadoEm;
 
     @ManyToOne(fetch = FetchType.LAZY)
