@@ -84,12 +84,12 @@ Bash: mvn spring-boot:run
 | **DELETE** | `/usuarios/{id}` | Remove um usuário | `id` |
 
 ### 💬 Respostas
-| Método | Endpoint | Descrição | Parâmetros |
-| :--- | :--- | :--- | :--- |
-| **POST** | `/respostas` | Envia uma resposta em um tópico | - |
-| **GET** | `/respostas/{id}` | Detalha uma resposta específica | `id` |
-| **PUT** | `/respostas/{id}` | Edita o texto da resposta | `id` |
-| **DELETE** | `/respostas/{id}` | Remove uma resposta | `id` |
+| Método | Endpoint                 | Descrição | Parâmetros |
+| :--- |:-------------------------| :--- | :--- |
+| **POST** | `/topico/{id}/respostas` | Envia uma resposta em um tópico | - |
+| **GET** | `topicos/{topicoId}/respostas`        | Detalha uma resposta específica | `id` |
+| **PUT** | `topicos/{topicoId}/respostas`        | Edita o texto da resposta | `id` |
+| **DELETE** | `topicos/{topicoId}/respostas`        | Remove uma resposta | `id` |
 
 ## 📊 Modelos de Envio (JSON)
 
@@ -115,7 +115,6 @@ Bash: mvn spring-boot:run
 ```JSON
 {
 "mensagem": "Excelente! O mapeamento JPA está funcionando.",
-"topicoId": 1,
 "autorId": 1
 }
 ```
