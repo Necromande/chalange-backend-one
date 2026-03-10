@@ -52,13 +52,14 @@ CREATE DATABASE forumhub_api;
 ```
 Passo 2: Configurar o application.properties
 Ajuste as credenciais de acesso ao seu MySQL em src/main/resources/application.properties:
-
+```
 spring.datasource.url=jdbc:mysql://localhost:3306/forumhub_api
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 
 # Configuração para estabilidade do JSON de Paginação
 spring.data.web.pageable.serialization-mode=via_dto
+```
 
 Passo 3: Rodar a Aplicação
 
